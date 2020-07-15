@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://qmatic.koopbank.com/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="https://qmatic.koopbank.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="https://qmatic.koopbank.com/">
+      <s:element name="Test">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="input" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TestResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ActiveReservation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reservationCode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="subnet" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="reservationActivationCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ActiveReservationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ActiveReservationResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetActiveReservationBranches">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetActiveReservationBranchesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetActiveReservationBranchesResult" type="tns:ArrayOfQmatic_BranchDto" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfQmatic_BranchDto">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Qmatic_BranchDto" nillable="true" type="tns:Qmatic_BranchDto" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Qmatic_BranchDto">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Subnet" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="BranchName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetActiveReservationTicketTypes">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="subnet" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetActiveReservationTicketTypesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetActiveReservationTicketTypesResult" type="tns:ArrayOfQmatic_ButtonDto" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfQmatic_ButtonDto">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Qmatic_ButtonDto" nillable="true" type="tns:Qmatic_ButtonDto" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Qmatic_ButtonDto">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ButtonID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ButtonName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TicketType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CounterStart" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CounterEnd" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetReservationSlots">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="subnet" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="button_ID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetReservationSlotsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetReservationSlotsResult" type="tns:ArrayOfQmatic_ReservationSlotDto" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfQmatic_ReservationSlotDto">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Qmatic_ReservationSlotDto" nillable="true" type="tns:Qmatic_ReservationSlotDto" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Qmatic_ReservationSlotDto">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="SlotID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="TimeRange" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CreateReservation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="reserveDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="slotID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="musteriNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="kartNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="cepTel" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateReservationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateReservationResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetActiveBranches">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetActiveBranchesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetActiveBranchesResult" type="tns:ArrayOfQmatic_Branch" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfQmatic_Branch">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Qmatic_Branch" nillable="true" type="tns:Qmatic_Branch" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Qmatic_Branch">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="BranchID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="BranchName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="BranchSubnet" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="isActive" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="BackgroundImagePath" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LabelColor" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ForceQmaticUpdate" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ForceMonitorUpdate" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ForceRestart" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ReservationFlag" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetMainRangeReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="startDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="endDate" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="reportType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMainRangeReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMainRangeReportResult" type="tns:ArrayOfQmatic_DailyMainReport" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfQmatic_DailyMainReport">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Qmatic_DailyMainReport" nillable="true" type="tns:Qmatic_DailyMainReport" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Qmatic_DailyMainReport">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ReferenceDate" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TicketSubnet" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReferenceName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalTicket" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetMainBranchRangeReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="branchSubnet" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="startDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="endDate" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="reportType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMainBranchRangeReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMainBranchRangeReportResult" type="tns:ArrayOfQmatic_DailyMainReport" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDailySubReport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ticketSubnet" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="startDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="endDate" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="reportType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDailySubReportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDailySubReportResult" type="tns:ArrayOfQmatic_DailySubReport" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfQmatic_DailySubReport">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Qmatic_DailySubReport" nillable="true" type="tns:Qmatic_DailySubReport" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Qmatic_DailySubReport">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ReferenceDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ReferenceName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalTicket" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="TestSoapIn">
+    <wsdl:part name="parameters" element="tns:Test" />
+  </wsdl:message>
+  <wsdl:message name="TestSoapOut">
+    <wsdl:part name="parameters" element="tns:TestResponse" />
+  </wsdl:message>
+  <wsdl:message name="ActiveReservationSoapIn">
+    <wsdl:part name="parameters" element="tns:ActiveReservation" />
+  </wsdl:message>
+  <wsdl:message name="ActiveReservationSoapOut">
+    <wsdl:part name="parameters" element="tns:ActiveReservationResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetActiveReservationBranchesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetActiveReservationBranches" />
+  </wsdl:message>
+  <wsdl:message name="GetActiveReservationBranchesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetActiveReservationBranchesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetActiveReservationTicketTypesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetActiveReservationTicketTypes" />
+  </wsdl:message>
+  <wsdl:message name="GetActiveReservationTicketTypesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetActiveReservationTicketTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetReservationSlotsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetReservationSlots" />
+  </wsdl:message>
+  <wsdl:message name="GetReservationSlotsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetReservationSlotsResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateReservationSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateReservation" />
+  </wsdl:message>
+  <wsdl:message name="CreateReservationSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateReservationResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetActiveBranchesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetActiveBranches" />
+  </wsdl:message>
+  <wsdl:message name="GetActiveBranchesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetActiveBranchesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMainRangeReportSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMainRangeReport" />
+  </wsdl:message>
+  <wsdl:message name="GetMainRangeReportSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMainRangeReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMainBranchRangeReportSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMainBranchRangeReport" />
+  </wsdl:message>
+  <wsdl:message name="GetMainBranchRangeReportSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMainBranchRangeReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDailySubReportSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDailySubReport" />
+  </wsdl:message>
+  <wsdl:message name="GetDailySubReportSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDailySubReportResponse" />
+  </wsdl:message>
+  <wsdl:portType name="QmaticWSSoap">
+    <wsdl:operation name="Test">
+      <wsdl:input message="tns:TestSoapIn" />
+      <wsdl:output message="tns:TestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ActiveReservation">
+      <wsdl:input message="tns:ActiveReservationSoapIn" />
+      <wsdl:output message="tns:ActiveReservationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveReservationBranches">
+      <wsdl:input message="tns:GetActiveReservationBranchesSoapIn" />
+      <wsdl:output message="tns:GetActiveReservationBranchesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveReservationTicketTypes">
+      <wsdl:input message="tns:GetActiveReservationTicketTypesSoapIn" />
+      <wsdl:output message="tns:GetActiveReservationTicketTypesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetReservationSlots">
+      <wsdl:input message="tns:GetReservationSlotsSoapIn" />
+      <wsdl:output message="tns:GetReservationSlotsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateReservation">
+      <wsdl:input message="tns:CreateReservationSoapIn" />
+      <wsdl:output message="tns:CreateReservationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveBranches">
+      <wsdl:input message="tns:GetActiveBranchesSoapIn" />
+      <wsdl:output message="tns:GetActiveBranchesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMainRangeReport">
+      <wsdl:input message="tns:GetMainRangeReportSoapIn" />
+      <wsdl:output message="tns:GetMainRangeReportSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMainBranchRangeReport">
+      <wsdl:input message="tns:GetMainBranchRangeReportSoapIn" />
+      <wsdl:output message="tns:GetMainBranchRangeReportSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDailySubReport">
+      <wsdl:input message="tns:GetDailySubReportSoapIn" />
+      <wsdl:output message="tns:GetDailySubReportSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="QmaticWSSoap" type="tns:QmaticWSSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Test">
+      <soap:operation soapAction="https://qmatic.koopbank.com/Test" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActiveReservation">
+      <soap:operation soapAction="https://qmatic.koopbank.com/ActiveReservation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveReservationBranches">
+      <soap:operation soapAction="https://qmatic.koopbank.com/GetActiveReservationBranches" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveReservationTicketTypes">
+      <soap:operation soapAction="https://qmatic.koopbank.com/GetActiveReservationTicketTypes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReservationSlots">
+      <soap:operation soapAction="https://qmatic.koopbank.com/GetReservationSlots" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateReservation">
+      <soap:operation soapAction="https://qmatic.koopbank.com/CreateReservation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveBranches">
+      <soap:operation soapAction="https://qmatic.koopbank.com/GetActiveBranches" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMainRangeReport">
+      <soap:operation soapAction="https://qmatic.koopbank.com/GetMainRangeReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMainBranchRangeReport">
+      <soap:operation soapAction="https://qmatic.koopbank.com/GetMainBranchRangeReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDailySubReport">
+      <soap:operation soapAction="https://qmatic.koopbank.com/GetDailySubReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="QmaticWSSoap12" type="tns:QmaticWSSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Test">
+      <soap12:operation soapAction="https://qmatic.koopbank.com/Test" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActiveReservation">
+      <soap12:operation soapAction="https://qmatic.koopbank.com/ActiveReservation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveReservationBranches">
+      <soap12:operation soapAction="https://qmatic.koopbank.com/GetActiveReservationBranches" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveReservationTicketTypes">
+      <soap12:operation soapAction="https://qmatic.koopbank.com/GetActiveReservationTicketTypes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReservationSlots">
+      <soap12:operation soapAction="https://qmatic.koopbank.com/GetReservationSlots" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateReservation">
+      <soap12:operation soapAction="https://qmatic.koopbank.com/CreateReservation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveBranches">
+      <soap12:operation soapAction="https://qmatic.koopbank.com/GetActiveBranches" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMainRangeReport">
+      <soap12:operation soapAction="https://qmatic.koopbank.com/GetMainRangeReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMainBranchRangeReport">
+      <soap12:operation soapAction="https://qmatic.koopbank.com/GetMainBranchRangeReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDailySubReport">
+      <soap12:operation soapAction="https://qmatic.koopbank.com/GetDailySubReport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="QmaticWS">
+    <wsdl:port name="QmaticWSSoap" binding="tns:QmaticWSSoap">
+      <soap:address location="http://172.16.23.200/qmatic/qmaticws.asmx" />
+    </wsdl:port>
+    <wsdl:port name="QmaticWSSoap12" binding="tns:QmaticWSSoap12">
+      <soap12:address location="http://172.16.23.200/qmatic/qmaticws.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
