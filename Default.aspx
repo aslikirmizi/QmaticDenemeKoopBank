@@ -49,8 +49,8 @@
                         <div class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
                                 <li><a runat="server" href="~/Default">Günlük İstatistikler</a></li>
-                                <li><a runat="server" href="~/Aylık">Aylık İstatistikler</a></li>
-                                <!-- <li><a runat="server" href="~/Contact">Contact</a></li> -->
+                                <li><a runat="server" href="~/Aylık">Aylık Şube İstatistikleri</a></li>
+                                <li><a runat="server" href="~/AylıkGenel">Aylık Genel İstatistikleri</a></li>
                             </ul>
                         </div>
                     </div>

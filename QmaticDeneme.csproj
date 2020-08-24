@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Aylık.aspx" />
+    <Content Include="AylıkGenel.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -178,6 +179,13 @@
     </Compile>
     <Compile Include="Aylık.aspx.designer.cs">
       <DependentUpon>Aylık.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AylıkGenel.aspx.cs">
+      <DependentUpon>AylıkGenel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AylıkGenel.aspx.designer.cs">
+      <DependentUpon>AylıkGenel.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

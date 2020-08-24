@@ -58,6 +58,9 @@ namespace QmaticDeneme
             }
             else{
                 CreateDataSource();
+                LineChart1.Visible = false;
+                Table1.Visible = false;
+                tellerTable.Visible = false;
             }
         }
 
@@ -215,51 +218,6 @@ namespace QmaticDeneme
             CreateGraph(xAxiS, decimalData.ToArray());
             CreateTellerTable(pulledData);
             CreateBranchTable(pulledBranchData);
-
-            //graph data Here generate
-            //var totalInRange = qmatic.GetMainBranchRangeReport(int.Parse(selectedBranch), daysInMonth.First(), daysInMonth.Last());
-            //foreach(var BranchDay in totalInRange)
-            //{
-              //  var total = BranchDay.TotalTicket;
-                //Console.WriteLine(total); 
-                //decimalData.Add(total);
-                //Label1.Text = (BranchDay.TotalTicket).ToString() + BranchDay.ReferenceDate.ToShortDateString(); 
-            //}
-            //decimal[] graphYdata = decimalData.ToArray();
-            //CreateGraph(xAxiS, graphYdata);
-
-            /*
-            foreach (var day in daysInMonth)
-            {
-                if (!(day.Day.ToString() == "1")) xAxiS += "," + day.Day.ToString();
-                var dailySpecData = qmatic.GetDailySubReport(day, int.Parse(selectedBranch), "type");
-                var gunlukTotal = 0;
-                foreach (var daySpecData in dailySpecData)
-                {
-                    //transaction type stats;
-                    gunlukTotal += daySpecData.TotalTicket;
-                    if (daySpecData.ReferenceName == "BİREYSEL") personal += daySpecData.TotalTicket;
-                    else if (daySpecData.ReferenceName == "TİCARİ") corporate += daySpecData.TotalTicket;
-                    else if (daySpecData.ReferenceName == "MONEYGRAM") moneygram += daySpecData.TotalTicket;
-
-                }
-                decimalData.Add(decimal.Parse(gunlukTotal.ToString()));
-                //-------------------teller stats -------------------------------------------
-                var dayData = qmatic.GetDailySubReport(day, int.Parse(selectedBranch), "teller");
-                foreach (var teller in dayData)
-                {
-                    if (tellerStats.ContainsKey(teller.ReferenceName)) tellerStats[teller.ReferenceName] += teller.TotalTicket;
-                    else tellerStats.Add(teller.ReferenceName, teller.TotalTicket);
-                }
-                //-----------------teller stats end -----------------------------------------
-            }
-            decimal[] graphYData = decimalData.ToArray();
-
-            CreateBranchStatsTable(personal, corporate, moneygram);
-            CreateTellerTable(); //draw the teller table
-
-            CreateGraph(xAxiS, graphYData);
-            */
         }
 
         /**
@@ -272,9 +230,12 @@ namespace QmaticDeneme
             LineChart1.ChartWidth = "800";//(prices.Length * 75).ToString();
             var subeName = branchesDict[int.Parse(DropDownList1.SelectedValue)];
             LineChart1.Series.Add(new AjaxControlToolkit.LineChartSeries { Name = "Müşteri", Data = graphYData });
+
             if (subeName != null) LineChart1.ChartTitle = subeName + " Aylık Müşteri Grafiği";
             LineChart1.AreaDataLabel = " Müşteri ";
             LineChart1.CategoriesAxis = xAxiS;
+            //LineChart1.ChartAreas["ChartArea1"].Area3DStyle.Enable3D = true;
+
             if (graphYData.Length > 4) LineChart1.Visible = true;
         }
 
@@ -308,58 +269,62 @@ namespace QmaticDeneme
 
         public void CreateBranchTable(Qmatic_DailyMainReport[] pulledData)
         {
+            //keep a dict of dates that have an associated customer 
+            HashSet<string> dates = new HashSet<string>();
             foreach (var teller in pulledData)
             {
+                dates.Add(teller.ReferenceDate);
                 if (branchStats.ContainsKey(teller.ReferenceName)) branchStats[teller.ReferenceName] += teller.TotalTicket;
                 else branchStats.Add(teller.ReferenceName, teller.TotalTicket);
             }
-            var personal = 0;
-            var corporate = 0;
-            var moneygram = 0;
-            if (branchStats.ContainsKey("BİREYSEL")) personal = branchStats["BİREYSEL"];
-            if (branchStats.ContainsKey("TİCARİ")) corporate = branchStats["TİCARİ"];
-            if (branchStats.ContainsKey("MONEYGRAM")) moneygram = branchStats["MONEYGRAM"];
 
-            CreateBranchStatsTable(personal, corporate, moneygram);
-            
+            var keys = branchStats.Keys;
+            TableRow headerRow = new TableRow();
+            TableRow dataRow = new TableRow();
+            int sum = 0; 
+            foreach(var key in keys)
+            {
+                
+                TableCell cell = new TableCell();
+                cell.Text = key; 
+                headerRow.Cells.Add(cell);
+                TableCell data = new TableCell();
+                sum += branchStats[key]; 
+                data.Text = branchStats[key].ToString() ;
+                dataRow.Cells.Add(data);
+
+            }
+            //manuel rows for comparison
+            TableCell tot = new TableCell();
+            tot.Text = "Toplam"; headerRow.Cells.Add(tot);
+            TableCell totDat = new TableCell();
+            totDat.Text = sum.ToString();dataRow.Cells.Add(totDat);
+            //working days
+            TableCell workTot = new TableCell();
+            workTot.Text = "İş günleri"; headerRow.Cells.Add(workTot);
+            TableCell workDat = new TableCell();
+            workDat.Text = dates.Count().ToString(); dataRow.Cells.Add(workDat);
+            //günlük averaj
+            TableCell workAv = new TableCell();
+            workAv.Text = "Ortalama"; headerRow.Cells.Add(workAv);
+            TableCell worAvDat = new TableCell();
+            if(dates.Count() > 0 )
+                worAvDat.Text = (sum/dates.Count()).ToString(); dataRow.Cells.Add(worAvDat);
+
+            Table1.Rows.Add(headerRow);
+            Table1.Rows.Add(dataRow);
+            if (sum > 10)
+            {
+                Table1.Visible = true;
+                errorLabel.Text = "";
+            }
+            else
+            {
+                errorLabel.Text = "Aradığınız tarih aralığı için bu şubede veri bulunamamıştır.";
+                Table1.Visible = false;
+            }
+
         }
-        /*
-         * draws the branch stats table
-         * @param personal branking tot number
-         * @param corporate branking tot number
-         * @param moneygram branking tot number
-         */
-        public void CreateBranchStatsTable(int personal, int corporate, int moneygram)
-        {
-            //draw the table ...
-            TableRow row = new TableRow();
-            TableCell cell1 = new TableCell();
-            TableCell cell2 = new TableCell();
-            TableCell cell3 = new TableCell();
-            TableCell cell4 = new TableCell();
-            TableCell cell5 = new TableCell();
-
-            int subeSubnet = int.Parse(DropDownList1.SelectedValue);
-            var subeName = branchesDict[subeSubnet];
-
-            if (subeName != null) cell1.Text = subeName; //;
-            else cell1.Text = "Şube verisi: ";
-            // else cell1.Text = subeSubnet.ToString();
-            cell2.Text = personal.ToString();
-            cell3.Text = corporate.ToString();
-            cell4.Text = moneygram.ToString();
-            var total = personal + moneygram + corporate;
-            cell5.Text = (total).ToString();
-            row.Cells.Add(cell1);
-            row.Cells.Add(cell2);
-            row.Cells.Add(cell3);
-            row.Cells.Add(cell4);
-            row.Cells.Add(cell5);
-            Table1.Rows.Add(row);
-            if(total > 10 ) Table1.Visible = true;
-            else errorLabel.Text = "Aradığınız tarih aralığı için bu şubede veri bulunamamıştır.";
-
-        }
-
+        
     }
 }

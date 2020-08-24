@@ -47,7 +47,9 @@
                             <div class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav">
                                     <li><a runat="server" href="~/">Günlük İstatistikler</a></li>
-                                    <li><a runat="server" href="~/Aylık">Aylık İstatistikler</a></li>
+                                    <li><a runat="server" href="~/Aylık">Aylık Şube İstatistikleri</a></li>
+                                    <li><a runat="server" href="~/AylıkGenel">Aylık Genel İstatistikleri</a></li>
+
                                     <!-- <li><a runat="server" href="~/Contact">Contact</a></li> -->
                                 </ul>
                             </div>
@@ -87,14 +89,8 @@
                     <p> &nbsp;&nbsp;&nbsp;&nbsp;
                         </p>
                     <div style="margin-left: 40px">
-                        <asp:Table ID="Table1" runat="server" Height="18px" Width="446px">
-                            <asp:TableRow>
-                                <asp:TableCell>Sube</asp:TableCell>
-                                <asp:TableCell>Kişisel</asp:TableCell>
-                                <asp:TableCell>Kurumsal</asp:TableCell>
-                                <asp:TableCell>Moneygram</asp:TableCell>
-                                <asp:TableCell>Toplam</asp:TableCell>
-                            </asp:TableRow>
+                        <asp:Table ID="Table1" runat="server" Height="20px" Width="600">
+                            
                         </asp:Table>
                     </div>
 
@@ -106,9 +102,9 @@
                             </asp:TableRow>
                         </asp:Table>
                     <br />
-                    <div style="margin-left: 40px">
+                        <div style="margin-left: 40px">
                             <asp:Label ID="errorLabel" runat="server"></asp:Label>
-                            <ajaxToolkit:LineChart ID="LineChart1" runat="server"  Width="800px"> </ajaxToolkit:LineChart>
+                            <ajaxToolkit:LineChart ID="LineChart1" runat="server"  Width="600px"> </ajaxToolkit:LineChart>
                         </div>
                     </div>
                         </asp:Panel>

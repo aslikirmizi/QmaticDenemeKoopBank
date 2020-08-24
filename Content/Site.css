@@ -1,6 +1,6 @@
 ﻿body {
     /*background-image: url(/images/back-3.png);*/
-    background-size: 1700px 1000px;
+    background-size: 1600px 1000px;
 }
 
 /* Move down content because we have a fixed navbar that is 50px tall */
@@ -176,7 +176,7 @@ img#logo {
 }
 
 body {
-    background-image: url("../images/back-3.png");
+    background-image: url("../images/deneme.jpg");
     background-repeat: no-repeat;
     background-attachment: scroll;
 }
@@ -198,4 +198,39 @@ div#UpdatePanel2 {
 
 table#tellerTable {
     margin-left: 40px;
+}
+
+#errorLabel{
+    background: white;
+}
+
+/* delete after this to get rid of rounded parts*/
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+table, td {
+    border: 1px solid black;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding: 5px;
+    margin-left: 5px;
+}
+span#Label1 {
+    border: 1px solid black;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding: 5px;
+}
+
+select {
+    border: 1px solid black;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding: 2px;
+}
+
+.dataTables {
+    display: flex;
 }
